@@ -14,6 +14,7 @@ public:
     void viewHabits() const;
     void saveToFile(const std::string& filename) const;
     void loadFromFile(const std::string& filename);
+    void deleteHabit(const std::string& habit);
 };
 
 #endif

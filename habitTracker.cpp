@@ -37,3 +37,12 @@ void HabitTracker::loadFromFile(const std::string& filename) {
         habits[habit] = count;
     }
 }
+
+void HabitTracker::deleteHabit(const std::string& habit) {
+    if (habits.erase(habit)) {
+        std::cout << "Habit \"" << habit << "\" deleted.\n";
+    } else {
+        std::cout << "Habit not found.\n";
+    }
+}
+

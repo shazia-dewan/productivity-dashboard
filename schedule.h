@@ -17,6 +17,8 @@ public:
     void loadFromFile(const std::string& filename);
     void saveToFile(const std::string& filename) const;
     bool isHourInRange(int hour) const;
+    void clearSchedule();
+
 };
 
 #endif

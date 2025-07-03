@@ -43,4 +43,12 @@ void Schedule::saveToFile(const std::string& filename) const {
     }
 }
 
+void Schedule::clearSchedule() {
+    for (int i = startHour; i <= endHour; ++i) {
+        hourlyTasks[i] = "free";
+    }
+    std::cout << "Schedule cleared.\n";
+}
+
+
 
