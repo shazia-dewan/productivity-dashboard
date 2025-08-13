@@ -3,6 +3,44 @@
 #include "schedule.h"
 #include "habitTracker.h"
 #include "weeklyGoals.h"
+#include <fstream>
+#include <ctime>
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
+//Checks if it is sunday if so all weekly goals are reset
+void resetWeeklyFiles() {
+    // Get current day of week (0 = Sunday, 6 = Saturday)
+    std::time_t t = std::time(nullptr);
+    std::tm* now = std::localtime(&t);
+    int dayOfWeek = now->tm_wday;
+
+    if (dayOfWeek == 0) {  // Sunday
+        std::string parentDir = "../";  // Adjust if needed
+        std::string goalsPath = parentDir + "goals.txt";
+        std::string habitsPath = parentDir + "habits.txt";
+
+        // Clear goals.txt
+        std::ofstream goalsFile(goalsPath, std::ios::trunc);
+        if (goalsFile) {
+            std::cout << "goals.txt reset.\n";
+        } else {
+            std::cerr << "Failed to reset goals.txt\n";
+        }
+
+        // Clear habits.txt
+        std::ofstream habitsFile(habitsPath, std::ios::trunc);
+        if (habitsFile) {
+            std::cout << "habits.txt reset.\n";
+        } else {
+            std::cerr << "Failed to reset habits.txt\n";
+        }
+    } else {
+        std::cout << " Not Sunday. No reset performed.\n";
+    }
+}
+
 
 void scheduleMenu(Schedule& mySchedule, int startHour, int endHour) {
     int choice, hour;
@@ -126,6 +164,7 @@ void weeklyMenu(WeeklyGoals& weeklyGoals) {
 
 
 int main() {
+
     const int startHour = 8;
     const int endHour = 20;
 
@@ -139,6 +178,8 @@ int main() {
     weeklyGoals.loadFromFile("goals.txt");
 
     int choice;
+
+    resetWeeklyFiles(); // Only if its sunday
 
     while (true) {
 
